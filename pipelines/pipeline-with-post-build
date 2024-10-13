@@ -49,15 +49,15 @@ pipeline {
         
             echo "Build Name: ${JOB_NAME}"
             sh "mkdir -p /Users/sankalp/jenkins-builds/$JOB_NAME"
-            if [ -e "./orderservice/target/*.jar" ]; then
+            if (filexists("./orderservice/target/*.jar")) {
                 sh "cp ./orderservice/target/*.jar /Users/sankalp/jenkins-builds/${JOB_NAME}/"
-            fi
-            if [ -e "./productservice/target/*.jar" ]; then
-                sh "cp ./productservice/target/*.jar /Users/sankalp/jenkins-builds/${JOB_NAME}/"
-            fi
-            if [ -e "./inventoryservice/target/*.jar" ]; then
+            }
+            if (filexists("./inventoryservice/target/*.jar")) {
                 sh "cp ./inventoryservice/target/*.jar /Users/sankalp/jenkins-builds/${JOB_NAME}/"
-            fi
+            }
+            if (filexists("./productservice/target/*.jar")) {
+                sh "cp ./productservice/target/*.jar /Users/sankalp/jenkins-builds/${JOB_NAME}/"
+            }
         }
         
    } 
