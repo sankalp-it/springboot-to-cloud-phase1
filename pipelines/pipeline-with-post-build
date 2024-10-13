@@ -14,15 +14,32 @@ pipeline {
         } 
         stage('Initialize'){
             steps{
-                echo "Initialize step "
+                echo "Initialize Step "
                 echo "PATH = ${M2_HOME}/bin:${PATH}"
                 echo "M2_HOME = /opt/maven"
             }
         }
-        stage('Build') {
+        stage ("Build-Clean") {
             steps {
                 sh "mvn clean"
-                sh "mvn install"
+            }
+        }
+        stage('Build-ProductService') {
+            when { changeset "productservice/*"}
+            steps {
+                sh "mvn install -pl productservice -am"
+            }
+        }
+        stage('Build-OrderService') {
+            when { changeset "orderservice/*"}
+            steps {
+                sh "mvn install -pl orderservice -am"
+            }
+        }
+        stage('Build-InventoryService') {
+            when { changeset "inventoryservice/*"}
+            steps {
+                sh "mvn install -pl inventoryservice -am"
             }
         }
      }
