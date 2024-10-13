@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+    tools {
+        maven "Maven-3.9.9"
+        jdk "JDK-22"
+    }
+    stages {
+        stage("Code"){ 
+            steps { 
+                echo "Cloning the code: ${PROJECT_REPO} "
+                git url: "${PROJECT_REPO}", branch: 'main'
+            } 
+            
+        } 
+        stage('Initialize'){
+            steps{
+                echo "PATH = ${M2_HOME}/bin:${PATH}"
+                echo "M2_HOME = /opt/maven"
+            }
+        }
+        stage('Build') {
+            steps {
+                sh "mvn clean"
+                sh "mvn install"
+            }
+        }
+     }
+    post {
+        always {
+          junit(
+              allowEmptyResults: true,
+              testResults: '*/test-reports/.xml'
+            )
+        }
+   } 
+}
