@@ -26,14 +26,14 @@ pipeline {
         }
      }
     post {
-        always {
-          steps {
+
+        steps {
             echo "Build Name: ${JOB_NAME}"
             sh "mkdir -p /Users/sankalp/jenkins-builds/$JOB_NAME"
             sh "cp ./orderservice/target/*.jar /Users/sankalp/jenkins-builds/${JOB_NAME}/"
             sh "cp ./productservice/target/*.jar /Users/sankalp/jenkins-builds/${JOB_NAME}/"
             sh "cp ./inventoryservice/target/*.jar /Users/sankalp/jenkins-builds/${JOB_NAME}/"
-          }
         }
+        
    } 
 }
