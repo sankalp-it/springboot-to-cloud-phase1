@@ -50,13 +50,21 @@ pipeline {
             echo "Build Name: ${JOB_NAME}"
             sh "mkdir -p /Users/sankalp/jenkins-builds/$JOB_NAME"
             if (filexists("./orderservice/target/*.jar")) {
-                sh "cp ./orderservice/target/*.jar /Users/sankalp/jenkins-builds/${JOB_NAME}/"
+                steps {
+                    sh "cp ./orderservice/target/*.jar /Users/sankalp/jenkins-builds/${JOB_NAME}/"
+                }
             }
             if (filexists("./inventoryservice/target/*.jar")) {
-                sh "cp ./inventoryservice/target/*.jar /Users/sankalp/jenkins-builds/${JOB_NAME}/"
+                steps {
+                    sh "cp ./inventoryservice/target/*.jar /Users/sankalp/jenkins-builds/${JOB_NAME}/"
+                }
+                
             }
             if (filexists("./productservice/target/*.jar")) {
-                sh "cp ./productservice/target/*.jar /Users/sankalp/jenkins-builds/${JOB_NAME}/"
+                steps {
+                    sh "cp ./productservice/target/*.jar /Users/sankalp/jenkins-builds/${JOB_NAME}/"
+                }
+                
             }
         }
         
