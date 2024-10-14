@@ -48,7 +48,10 @@ pipeline {
         success {
             
             echo "Build Name: ${JOB_NAME}"
+            
             sh "mkdir -p /Users/sankalp/jenkins-builds/$JOB_NAME"
+            // The following format is to be used to test the existence of file and then move file to target in the post build stage. Need to find a better way. 
+            // #Issue-8 in the Git Project
             sh "test -e ./productservice/target/*.jar && cp ./productservice/target/*.jar /Users/sankalp/jenkins-builds/${JOB_NAME}/ || echo 'File not exists'"
             sh "test -e ./orderservice/target/*.jar && cp ./orderservice/target/*.jar /Users/sankalp/jenkins-builds/${JOB_NAME}/ || echo 'File not exists'"
             sh "test -e ./inventoryservice/target/*.jar && cp ./inventoryservice/target/*.jar /Users/sankalp/jenkins-builds/${JOB_NAME}/ || echo 'File not exists'"
