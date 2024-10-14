@@ -4,6 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+## Add a comment to test the build trigger ###
 ### STS ###
 .apt_generated
 .classpath
