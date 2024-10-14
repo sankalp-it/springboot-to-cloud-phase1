@@ -14,27 +14,47 @@ pipeline {
         } 
         stage('Initialize'){
             steps{
-                echo "Initialize step "
+                echo "Initialize Step "
                 echo "PATH = ${M2_HOME}/bin:${PATH}"
                 echo "M2_HOME = /opt/maven"
             }
         }
-        stage('Build') {
+        stage ("Build-Clean") {
             steps {
                 sh "mvn clean"
-                sh "mvn install"
+            }
+        }
+        stage('Build-ProductService') {
+            when { changeset "productservice/*"}
+            steps {
+                sh "mvn install -pl productservice -am"
+            }
+        }
+        stage('Build-OrderService') {
+            when { changeset "orderservice/*"}
+            steps {
+                sh "mvn install -pl orderservice -am"
+            }
+        }
+        stage('Build-InventoryService') {
+            when { changeset "inventoryservice/*"}
+            steps {
+                sh "mvn install -pl inventoryservice -am"
             }
         }
      }
     post {
 
         success {
-        
+            
             echo "Build Name: ${JOB_NAME}"
+            
             sh "mkdir -p /Users/sankalp/jenkins-builds/$JOB_NAME"
-            sh "cp ./orderservice/target/*.jar /Users/sankalp/jenkins-builds/${JOB_NAME}/"
-            sh "cp ./productservice/target/*.jar /Users/sankalp/jenkins-builds/${JOB_NAME}/"
-            sh "cp ./inventoryservice/target/*.jar /Users/sankalp/jenkins-builds/${JOB_NAME}/"
+            // The following format is to be used to test the existence of file and then move file to target in the post build stage. Need to find a better way. 
+            // #Issue-8 in the Git Project
+            sh "test -e ./productservice/target/*.jar && cp ./productservice/target/*.jar /Users/sankalp/jenkins-builds/${JOB_NAME}/ || echo 'File not exists'"
+            sh "test -e ./orderservice/target/*.jar && cp ./orderservice/target/*.jar /Users/sankalp/jenkins-builds/${JOB_NAME}/ || echo 'File not exists'"
+            sh "test -e ./inventoryservice/target/*.jar && cp ./inventoryservice/target/*.jar /Users/sankalp/jenkins-builds/${JOB_NAME}/ || echo 'File not exists'"
         }
         
    } 
