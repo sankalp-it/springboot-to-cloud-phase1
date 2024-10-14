@@ -49,9 +49,9 @@ pipeline {
             
             echo "Build Name: ${JOB_NAME}"
             sh "mkdir -p /Users/sankalp/jenkins-builds/$JOB_NAME"
-            sh "test -e ./productservice/target/*.jar && cp ./productservice/target/*.jar /Users/sankalp/jenkins-builds/${JOB_NAME}/"
-            sh "test -e ./orderservice/target/*.jar && cp ./orderservice/target/*.jar /Users/sankalp/jenkins-builds/${JOB_NAME}/"
-            sh "test -e ./inventoryservice/target/*.jar && cp ./inventoryservice/target/*.jar /Users/sankalp/jenkins-builds/${JOB_NAME}/"
+            sh "test -e ./productservice/target/*.jar && cp ./productservice/target/*.jar /Users/sankalp/jenkins-builds/${JOB_NAME}/ || echo 'File not exists'"
+            sh "test -e ./orderservice/target/*.jar && cp ./orderservice/target/*.jar /Users/sankalp/jenkins-builds/${JOB_NAME}/ || echo 'File not exists'"
+            sh "test -e ./inventoryservice/target/*.jar && cp ./inventoryservice/target/*.jar /Users/sankalp/jenkins-builds/${JOB_NAME}/ || echo 'File not exists'"
         }
         
    } 
