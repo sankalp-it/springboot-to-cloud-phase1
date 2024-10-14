@@ -4,6 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+## Add comment to test build trigger for product service ##
 ### STS ###
 .apt_generated
 .classpath
