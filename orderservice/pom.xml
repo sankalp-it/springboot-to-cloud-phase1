@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.technet.ms.standalone</groupId>
 	<artifactId>orderservice</artifactId>
-	<version>0.1.0-SNAPSHOT</version>
+	<version>0.1.1-SNAPSHOT</version>
 	<name>orderservice</name>
 	<description>Order Service</description>
 	<url/>
@@ -42,6 +42,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.github.gavlyukovskiy</groupId>
+			<artifactId>p6spy-spring-boot-starter</artifactId>
+			<version>1.8.0</version>
 		</dependency>
 		<!-- <dependency>
 			<groupId>org.springframework.cloud</groupId>

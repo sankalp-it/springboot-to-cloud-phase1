@@ -29,7 +29,9 @@ public class OrderService {
     }
 
     public ProductOrder addOrder(ProductOrder order) {
+        //System.out.println("PRODUCT ORDER:"+ order);
         ProductDTO product = productClient.getProductById(order.getProductId());
+        //System.out.println("PRODUCT RETURNED :"+ product);
         if (product != null) {
             return orderRepository.save(order);
         } else {

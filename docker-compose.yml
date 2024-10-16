@@ -1,0 +1,68 @@
+version: '3.7'
+services:
+  productservice:
+    build:
+      context: ./productservice/
+      dockerfile: Dockerfile
+    ports:
+      - 8081:8081
+    depends_on:
+      mysqldb:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/mysql
+      - SPRING_DATASOURCE_USERNAME=spbootuser
+      - SPRING_DATASOURCE_PASSWORD=m4sq1@1024
+    networks:
+      - springboot-mysql-network
+  orderservice:
+    build:
+      context: ./orderservice/
+      dockerfile: Dockerfile
+    ports:
+      - 8082:8082
+    depends_on:
+      mysqldb:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/mysql
+      - SPRING_DATASOURCE_USERNAME=spbootuser
+      - SPRING_DATASOURCE_PASSWORD=m4sq1@1024
+    networks:
+      - springboot-mysql-network
+  inventoryservice:
+    build:
+      context: ./inventoryservice/
+      dockerfile: Dockerfile
+    ports:
+      - 8083:8083
+    depends_on:
+      mysqldb:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/mysql
+      - SPRING_DATASOURCE_USERNAME=spbootuser
+      - SPRING_DATASOURCE_PASSWORD=m4sq1@1024
+    networks:
+      - springboot-mysql-network
+  mysqldb:
+    image: mysql:latest
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_DATABASE=mysql
+      - MYSQL_ROOT_PASSWORD=m4sq1@1024
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - springboot-mysql-network
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      retries: 10
+      interval: 3s
+      timeout: 30s
+volumes:
+  mysql-data:
+networks:
+  springboot-mysql-network:
+    name: springboot-mysql-network
