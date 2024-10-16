@@ -32,6 +32,8 @@ public class OrderController {
 
     @PostMapping
     public ProductOrder addOrder(@RequestBody ProductOrder order) {
+        //System.out.println("PRODUCT ORDER IN Controller :" + order);
+    
         return orderService.addOrder(order);
     }
 }
